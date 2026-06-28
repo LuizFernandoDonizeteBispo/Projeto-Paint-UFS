@@ -4,56 +4,85 @@ from tkinter import ttk
 # Quando mouse é pressionado
 def iniciar_figura_nova(event): 
     global figura_nova
+
     if tipo_figura_var.get() == 'Linha':
         figura_nova = ("linha", (event.x, event.y, event.x, event.y))
+
     elif tipo_figura_var.get() == 'Circulo':
-        figura_nova = ('circulo', (event.x, event.y, 0))  
+        figura_nova = ('circulo', (event.x, event.y, 0))
+
+    elif tipo_figura_var.get() == 'Oval':
+        figura_nova = ('oval', (event.x, event.y, 0, 0))
+
     else :
         figura_nova = ("rabisco", [(event.x, event.y)])
 
 # Quando mouse é movido com o botão pressionado
 def atualizar_figura_nova(event):
     global figura_nova
+
     if figura_nova[0] == "rabisco":
         figura_nova[1].append((event.x, event.y))
 
     elif figura_nova[0] == "circulo":
-        #figura_nova[1].append((event.x, event.y))
+        # Calcula o raio para o circulo
         raio = ( (figura_nova[1][0] - event.x)**2 + (figura_nova[1][1] - event.y)**2 ) ** 0.5
-        figura_nova = ('circulo', (figura_nova[1][0], figura_nova[1][1], raio))
+        # figura_nova Recebe o nome, os dois primeiros pontos e o raio calculado)
+        figura_nova = ('circulo', (figura_nova[1][0], figura_nova[1][1], raio)) 
+
+    elif figura_nova[0] == 'oval':
+        # Calcula dois raios, horizontal e vertical
+        raioX = abs(figura_nova[1][0] - event.x)
+        raioY = abs(figura_nova[1][1] - event.y)
+        figura_nova = ('oval', (figura_nova[1][0], figura_nova[1][1], raioX, raioY))
 
     else : # figura_nova[0] == "linha"
         figura_nova = ("linha", (figura_nova[1][0], figura_nova[1][1], event.x, event.y))
+
     desenhar_figuras()
     desenhar_figura_nova()
 
 # Quando mouse é solto
 def incluir_figura_nova(event): 
     if not incompleta(figura_nova): # para evitar incluir figuras incompletas, como uma linha sem comprimento ou um rabisco com um único ponto
-        figuras.append(figura_nova) 
+        figuras.append(figura_nova) # salva as figuras na tela
     desenhar_figuras()
 
+# Cria a imagem na tela, sem deixar as versoes depois de soltar o mouse
 def desenhar_figuras():
     canvas.delete("all")
     for fig, values in figuras:
         if fig == "linha":
             canvas.create_line(values[0], values[1], values[2], values[3])
 
+        # recebe os pontos centrais (cx, cy) e o raio e cria o circulo com base neles
         elif fig == 'circulo':
             cx, cy, raio = values
             canvas.create_oval(cx-raio, cy-raio, cx+raio, cy+raio)
 
+        # recebe os pontos centrais (cx, cy) e dois raios, para criar a oval
+        elif fig == 'oval':
+            cx, cy, raioX, raioY = values
+            canvas.create_oval(cx-raioX, cy-raioY, cx+raioX, cy+raioY)    
+
         else : # fig == "rabisco"
             canvas.create_line(values)
 
-def desenhar_figura_nova():
+# Cria a versao antes dela ser solta, com o efeito do dash
+def desenhar_figura_nova(): 
     fig, values = figura_nova
     if fig == "linha":
         canvas.create_line(values[0], values[1], values[2], values[3], dash=(4, 2))
     
+    # Utiliza de um raio e dois pontos centrais para o circulo
     elif fig == 'circulo':
         cx, cy, raio = values
         canvas.create_oval(cx-raio, cy-raio, cx+raio, cy+raio, dash=(4, 2))
+
+    # Utiliza de dois raios e dois pontos centrais para a criação da oval
+    elif fig == 'oval':
+        cx, cy, raioX, raioY = values
+        canvas.create_oval(cx-raioX, cy-raioY, cx+raioX, cy+raioY, dash=(4,2))
 
     else : # fig == "rabisco"
         canvas.create_line(values, dash=(4, 2))
@@ -63,8 +92,13 @@ def incompleta(figura):
     fig, values = figura
     if fig == "linha":
         return (values[0], values[1]) == (values[1], values[0])
+    
     elif fig == 'circulo':
         return values[2] == 0
+    
+    elif fig == 'oval':
+        return values[2] == 0 or values[3] == 0
+    
     else : # fig == "rabisco"
         return len(values) <= 1
 
@@ -74,6 +108,10 @@ def incompleta(figura):
 figuras = []       # Todas as figuras desenhadas
 figura_nova = None # Figura que está sendo desenhada, mas ainda não foi incluída em figuras
 
+raioX = 0
+raioY = 0
+
+
 root = Tk()
 frame = Frame(root)
 
@@ -81,13 +119,13 @@ frame = Frame(root)
 paddings = {'padx': 5, 'pady': 5} 
 
 # label
-label = ttk.Label(frame,  text='Linha, Rabisco ou Circulo:')
+label = ttk.Label(frame,  text='Paint.v02')
 label.grid(column=0, row=0, sticky=W, **paddings)
 
 # option menu
 tipo_figura_var = StringVar(root) # Guarda o tipo de figura selecionado no option menu (linha ou rabisco)
 option_menu = ttk.OptionMenu(frame, tipo_figura_var,
-                             'Linha', 'Linha', 'Rabisco', 'Circulo')
+                             'Linha', 'Linha', 'Rabisco', 'Circulo', 'Oval')
 option_menu.grid(column=1, row=0, sticky=W, **paddings)
 
 # Área de desenho
