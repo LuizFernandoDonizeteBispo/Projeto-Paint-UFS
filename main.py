@@ -17,6 +17,7 @@ def cor_preenchimento():
 
 
 #funçao que define a cor das bordas
+def cor_borda():
     global cor_bord
     if tipo_cor_var.get() == "Preto":
         cor_bord = 'black'
