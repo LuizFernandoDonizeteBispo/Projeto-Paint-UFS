@@ -149,37 +149,25 @@ class FiguraOval(Figura):
 #####################################################################################################################################################
 
 
-def cor_borda():
-    global cor_bord
-    if tipo_cor_var.get() == "Preto":
-        cor_bord = 'black'
-    elif tipo_cor_var.get() == "Vermelho":
-        cor_bord = 'red'
-    elif tipo_cor_var.get() == "Verde":
-        cor_bord = 'green'
-    elif tipo_cor_var.get() == "Azul":
-        cor_bord = 'blue'
-    else:
-        cor_bord = 'black'
+
+class SeletorCor:
+
+   _CORES = {
+       "Preto": "black",
+       "Vermelho": "red",
+       "Verde": "green",
+       "Azul": "blue",
+       "Amarelo": "yellow",
+       "Cinza": "gray",
+       "Roxo": "purple",
+   }
+   @staticmethod
+   def converter(nome):
+       return SeletorCor._CORES.get(nome, "black")
 
 
-def cor_preenchimento():
-    global cor_preench
-    if tipo_preenchimento_var.get() == "Preto":
-        cor_preench = 'black'
-        return cor_preench
-    elif tipo_preenchimento_var.get() == "Vermelho":
-        cor_preench = 'red'
-        return cor_preench
-    elif tipo_preenchimento_var.get() == "Verde":
-        cor_preench = 'green'
-        return cor_preench
-    elif tipo_preenchimento_var.get() == "Azul":
-        cor_preench = 'blue'
-        return cor_preench
-    else:
-        cor_preench = ''
-        return cor_preench
+cor_bord = SeletorCor.converter(tipo_cor_var.get())
+cor_preench = SeletorCor.converter(tipo_preenchimento_var.get())
 
 
 """ # Quando mouse é pressionado
