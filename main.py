@@ -179,6 +179,28 @@ class FiguraOval(Figura):
 
 #####################################################################################################################################################
 
+class SeletorCor:
+
+   _CORES = {
+       "Preto": "black",
+       "Vermelho": "red",
+       "Verde": "green",
+       "Azul": "blue",
+       "Amarelo": "yellow",
+       "Cinza": "gray",
+       "Roxo": "purple",
+   }
+   @staticmethod
+   def converter(nome):
+       return SeletorCor._CORES.get(nome, "black")
+
+
+cor_bord = SeletorCor.converter(tipo_cor_var.get())
+cor_preench = SeletorCor.converter(tipo_preenchimento_var.get())
+
+
+#####################################################################################################################################################
+
 
 #******* MAIN *******#
 
