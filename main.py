@@ -177,6 +177,87 @@ class FiguraOval(Figura):
     def incompleta(self):
         return self.values[2] == 0 or self.values[3] == 0
 
+
+
+
+
+#QUADRO: conjunto de codigos para decidir quando se usar cada açao e com qual tecla se usar
+
+class Quadro:
+    def __init__(self, canvas, string_var_prench, string_var_bord, string_var_figura):
+        self.figuras = []          # Lista para guardar todos os desenhos prontos
+        self.canvas = canvas        # Guarda o canvas que veio lá de fora
+        self.figura_atual = None   # Guarda a figura que está sendo feita na hora
+        
+        # Guarda as opções que o usuário escolheu nos menus
+        self.string_var_prench = string_var_prench
+        self.string_var_bord = string_var_bord
+        self.string_var_figura = string_var_figura
+
+        # Liga os movimentos do mouse com as funções da classe
+        canvas.bind('<ButtonPress-1>', self.iniciar_figura)      # Clicou
+        canvas.bind('<B1-Motion>', self.atualizar_figura)         # Arrastou
+        canvas.bind('<ButtonRelease-1>', self.incluir_figura)     # Soltou
+    
+    def iniciar_figura(self, event):
+        # Pega a cor da borda e converte usando o SeletorCor
+        cor_b = SeletorCor.converter(self.string_var_bord.get())
+        
+        # Se for transparente deixa vazio, senão converte a cor
+        if self.string_var_prench.get() == 'Transparente':
+            cor_p = ""
+        else:
+            cor_p = SeletorCor.converter(self.string_var_prench.get())
+            
+        # Pega o tipo da forma selecionada
+        tipo = self.string_var_figura.get()
+        
+        # Cria o objeto certo dependendo do que está selecionado no menu
+        if tipo == 'Linha':
+            # Começa a linha no ponto do clique (x1, y1 igual a x2, y2)
+            self.figura_atual = FiguraLinha('linha', [event.x, event.y, event.x, event.y], cor_b, cor_p)
+        elif tipo == 'Retangulo':
+            # Começa o retângulo com os pontos sobrepostos
+            self.figura_atual = FiguraRetangulo('retangulo', [event.x, event.y, event.x, event.y], cor_b, cor_p)
+        elif tipo == 'Rabisco':
+            # Cria o rabisco passando uma lista com o primeiro ponto
+            self.figura_atual = FiguraRabisco('rabisco', [(event.x, event.y)], cor_b, cor_p)
+        elif tipo == 'Circulo':
+            # Cria o círculo com raio valendo zero no início
+            self.figura_atual = FiguraCirculo('circulo', [event.x, event.y, 0], cor_b, cor_p)
+        else:
+            # Se não for nenhum dos outros, cria a oval com raios zerados
+            self.figura_atual = FiguraOval('oval', [event.x, event.y, 0, 0], cor_b, cor_p)
+
+    def atualizar_figura(self, event):
+        # Se tiver uma figura sendo feita agora
+        if self.figura_atual is not None:
+            # Atualiza o tamanho dela com a nova posição do mouse
+            self.figura_atual.atualizar(event.x, event.y)
+            # Limpa e redesenha a tela para mostrar a prévia
+            self.redesenhar()
+
+    def incluir_figura(self, event):
+        # Se o usuário estava desenhando algo antes de soltar o botão
+        if self.figura_atual is not None:
+            # Só salva se a figura não estiver incompleta (tamanho zero)
+            if not self.figura_atual.incompleta():
+                self.figuras.append(self.figura_atual) # Salva na lista definitiva
+            
+            self.figura_atual = None # Limpa a figura atual porque o desenho acabou
+            self.redesenhar()       # Atualiza a tela pela última vez
+
+    def redesenhar(self):
+        # Apaga tudo o que está no canvas atualmente
+        self.canvas.delete('all')
+        
+        # Desenha de novo todas as figuras que já foram salvas na lista
+        for fig in self.figuras:
+            fig.desenhar(self.canvas)
+            
+        # Se tiver uma figura sendo arrastada, desenha ela com o tracejado ativado
+        if self.figura_atual is not None:
+            self.figura_atual.desenhar(self.canvas, tracejado=True)
 #####################################################################################################################################################
 
 
