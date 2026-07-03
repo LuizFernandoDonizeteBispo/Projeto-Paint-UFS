@@ -4,17 +4,18 @@ from figura_rabisco import FiguraRabisco
 from figura_circulo import FiguraCirculo
 from figura_oval import FiguraOval
 from seletor_cor import SeletorCor
+from figura import Figura
 
 
 class Quadro:
-    def __init__(self, canvas, string_var_prench, string_var_bord, string_var_figura):
+    def __init__(self, canvas, tipo_preenchimento_var, tipo_bord_var, string_var_figura):
         self.figuras = []          # Lista para guardar todos os desenhos prontos
         self.canvas = canvas       # Guarda o canvas que veio lá de fora
         self.figura_atual = None   # Guarda a figura que está sendo feita na hora
 
         # Guarda as opções que o usuário escolheu nos menus
-        self.string_var_prench = string_var_prench
-        self.string_var_bord = string_var_bord
+        self.tipo_preenchimento_var = tipo_preenchimento_var
+        self.tipo_bord_var = tipo_bord_var
         self.string_var_figura = string_var_figura
 
         # Liga os movimentos do mouse com as funções da classe
@@ -24,13 +25,13 @@ class Quadro:
 
     def iniciar_figura(self, event):
         # Pega a cor da borda e converte usando o SeletorCor
-        cor_b = SeletorCor.converter(self.string_var_bord.get())
+        cor_b = SeletorCor.converter(self.tipo_bord_var.get())
 
         # Se for transparente deixa vazio, senão converte a cor
-        if self.string_var_prench.get() == 'Transparente':
+        if self.tipo_preenchimento_var.get() == 'Transparente':
             cor_p = ""
         else:
-            cor_p = SeletorCor.converter(self.string_var_prench.get())
+            cor_p = SeletorCor.converter(self.tipo_preenchimento_var.get())
 
         # Pega o tipo da forma selecionada
         tipo = self.string_var_figura.get()
