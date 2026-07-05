@@ -25,4 +25,8 @@ class Desenho:
                 fig.desenhar(self.canvas)
 
             if self.figura_atual is not None:
-                self.figura_atual.desenhar(self.canvas, tracejado=True)
+                self.figura_atual.desenhar(self.canvas)#, tracejado=True)
+
+    def desenhar(self, canvas):
+        cx, cy, raio = self.values  # recebe os pontos centrais (cx, cy) e o raio e cria o circulo com base neles
+        canvas.create_oval(cx - raio, cy - raio, cx + raio, cy + raio, fill=self.cor_preench, outline=self.cor_bord)

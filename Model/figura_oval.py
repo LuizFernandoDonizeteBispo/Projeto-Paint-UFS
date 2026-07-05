@@ -3,7 +3,7 @@ from Model.figura import Figura
 
 class FiguraOval(Figura):
 
-    def desenhar(self, canvas, tracejado=False):
+    def desenhar(self, canvas):#, tracejado=False):
         # recebe os pontos centrais (cx, cy) e dois raios, para criar a oval
         cx, cy, raioX, raioY = self.values
         canvas.create_oval(cx - raioX, cy - raioY, cx + raioX, cy + raioY, fill=self.cor_preench, outline=self.cor_bord)

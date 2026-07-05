@@ -1,13 +1,14 @@
 from View.seletor_cor import SeletorCor
+from tkinter import Tk, Frame, Canvas, W
 from Model import * 
 
 
 class Quadro:
-    def __init__(self, canvas, tipo_preenchimento_var, tipo_bord_var, string_var_figura):
-        self.figuras = []          # Lista para guardar todos os desenhos prontos
+    def __init__(self, canvas, tipo_preenchimento_var, tipo_bord_var, string_var_figura):         
         self.canvas = canvas       # Guarda o canvas que veio lá de fora
         self.figura_atual = None   # Guarda a figura que está sendo feita na hora
-
+        self.root = Tk()
+        self.frame_canvas.pack()
         # Guarda as opções que o usuário escolheu nos menus
         self.tipo_preenchimento_var = tipo_preenchimento_var
         self.tipo_bord_var = tipo_bord_var
@@ -43,24 +44,13 @@ class Quadro:
         else:
             self.figura_atual = FiguraOval('oval', [event.x, event.y, 0, 0], cor_b, cor_p)
 
-    def atualizar_figura(self, event):
-        if self.figura_atual is not None:
-            self.figura_atual.atualizar(event.x, event.y)
-            self.redesenhar()
+    def montar_quadro(self, root):
+        frame_canvas = Frame(root)
+        frame_canvas.pack()
 
-    def incluir_figura(self, event):
-        if self.figura_atual is not None:
-            if not self.figura_atual.incompleta():
-                self.figuras.append(self.figura_atual)
+        # Widgets arranjados com Layout grid dentro de frame
+        paddings = {'padx': 5, 'pady': 5}
+        canvas = Canvas(frame_canvas, bg='white', width=900, height=600)  # Área de desenho
+        canvas.grid(column=0, row=0, sticky=W, **paddings)
 
-            self.figura_atual = None
-            self.redesenhar()
-
-    def redesenhar(self):
-        self.canvas.delete('all')
-
-        for fig in self.figuras:
-            fig.desenhar(self.canvas)
-
-        if self.figura_atual is not None:
-            self.figura_atual.desenhar(self.canvas)#, tracejado=True)
+    

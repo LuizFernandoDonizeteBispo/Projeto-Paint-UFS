@@ -15,16 +15,16 @@ class Figura(ABC):
     cor_preench: str
 
     @abstractmethod
-    def desenhar(self, canvas, tracejado=False):
+    def desenhar(self, canvas):#, tracejado=False):
         """Desenha a figura no canvas recebido."""
-        raise NotImplementedError("Subclasse deve implementar o método desenhar")
+        #raise NotImplementedError("Subclasse deve implementar o método desenhar")
 
     @abstractmethod
     def atualizar(self, x, y):
         """Atualiza a figura conforme o mouse se move."""
-        raise NotImplementedError("Subclasse deve implementar o método atualizar")
+        #raise NotImplementedError("Subclasse deve implementar o método atualizar")
 
     @abstractmethod
     def incompleta(self):
         """Indica se a figura ainda não tem tamanho válido para ser salva."""
-        raise NotImplementedError("Subclasse deve implementar o método incompleta")
+        #raise NotImplementedError("Subclasse deve implementar o método incompleta")

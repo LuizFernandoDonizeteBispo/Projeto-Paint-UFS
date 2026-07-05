@@ -3,7 +3,7 @@ from Model.figura import Figura
 
 class FiguraRetangulo(Figura):
 
-    def desenhar(self, canvas, tracejado=False):
+    def desenhar(self, canvas):#, tracejado=False):
         x1, y1, x2, y2 = self.values
         canvas.create_rectangle(x1, y1, x2, y2, fill=self.cor_preench, outline=self.cor_bord)
 
