@@ -3,6 +3,7 @@ from tkinter import Tk, Frame, Canvas, W
 from Model import * 
 
 
+
 class Quadro:
     def __init__(self, canvas, tipo_preenchimento_var, tipo_bord_var, string_var_figura):         
         self.canvas = canvas       # Guarda o canvas que veio lá de fora

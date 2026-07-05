@@ -1,3 +1,4 @@
+from tkinter import Tk, Frame, Canvas, W
 from Model import *
 from View.menu import Menu
 from View.quadro import Quadro
@@ -10,4 +11,4 @@ menu.montar()
 
 quadro = Quadro(canvas, menu.tipo_preenchimento_var, menu.tipo_cor_var, menu.tipo_figura_var)
 quadro.montar_quadro()
-root.mainloop()
+quadro.root.mainloop()
