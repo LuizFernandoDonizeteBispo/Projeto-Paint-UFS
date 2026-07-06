@@ -6,7 +6,7 @@ from Model import *
 class JanelaPaint():
     def __init__(self, canvas):
        self.canvas = canvas
-    def desenhar(self, figura):
+    def desenhar(self, figura): #desenha figuras çiteralmente, esta no view porque mexe na parte visual. o controller e responsavel por puxar esse metodo
         tipo = figura.tipo
         coords = figura.values
         cor_bord = figura.cor_bord
