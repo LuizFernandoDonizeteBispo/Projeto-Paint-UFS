@@ -1,0 +1,94 @@
+from dataclasses import dataclass
+from abc import ABC, abstractmethod
+
+
+class SeletorCor:
+    _CORES = {
+        "Preto": "black",
+        "Vermelho": "red",
+        "Verde": "green",
+        "Azul": "blue",
+        "Amarelo": "yellow",
+        "Cinza": "gray",
+        "Roxo": "purple",
+    }
+
+    @staticmethod
+    def converter(nome):
+        return SeletorCor._CORES.get(nome, "black")
+
+
+# ==========================================
+# CLASSE ABSTRATA FIGURA (figura.py)
+# ==========================================
+@dataclass
+class Figura(ABC):
+    """
+    Cada Figura recebe: Tipo, Valores, Cor_Bord e Cor_Preench
+    """
+    tipo: str
+    values: list
+    cor_bord: str
+    cor_preench: str
+
+    @abstractmethod
+    def atualizar(self, x, y):
+        """Atualiza a figura conforme o mouse se move."""
+        raise NotImplementedError("Subclasse deve implementar o método atualizar")
+
+    @abstractmethod
+    def incompleta(self):
+        """Indica se a figura ainda não tem tamanho válido para ser salva."""
+        raise NotImplementedError("Subclasse deve implementar o método incompleta")
+
+
+# ==========================================
+# SUBCLASSES DE FIGURA
+# ==========================================
+
+class FiguraLinha(Figura):
+    def atualizar(self, x, y):
+        x1, y1, _, _ = self.values
+        self.values = (x1, y1, x, y)
+
+    def incompleta(self):
+        return self.values[0:2] == self.values[2:4]
+
+
+class FiguraRetangulo(Figura):
+    def atualizar(self, x, y):
+        x1, y1, _, _ = self.values
+        self.values = (x1, y1, x, y)
+
+    def incompleta(self):
+        x1, y1, x2, y2 = self.values
+        return (x1, y1) == (x2, y2)
+
+
+class FiguraRabisco(Figura):
+    def atualizar(self, x, y):
+        self.values.append((x, y))
+
+    def incompleta(self):
+        return len(self.values) <= 1
+
+
+class FiguraCirculo(Figura):
+    def atualizar(self, x, y):
+        cx, cy, _ = self.values
+        raio = ((cx - x) ** 2 + (cy - y) ** 2) ** 0.5
+        self.values = (cx, cy, raio)
+
+    def incompleta(self):
+        return self.values[2] == 0
+
+
+class FiguraOval(Figura):
+    def atualizar(self, x, y):
+        cx, cy, _, _ = self.values
+        raioX = abs(cx - x)
+        raioY = abs(cy - y)
+        self.values = (cx, cy, raioX, raioY)
+
+    def incompleta(self):
+        return self.values[2] == 0 or self.values[3] == 0
