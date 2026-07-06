@@ -15,10 +15,8 @@ class Figura(ABC):
 
     @abstractmethod
     def atualizar(self, x, y):
-        """Atualiza a figura conforme o mouse se move."""
-        raise NotImplementedError("Subclasse deve implementar o método atualizar")
+        pass
 
     @abstractmethod
     def incompleta(self):
-        """Indica se a figura ainda não tem tamanho válido para ser salva."""
-        raise NotImplementedError("Subclasse deve implementar o método incompleta")
+        pass
