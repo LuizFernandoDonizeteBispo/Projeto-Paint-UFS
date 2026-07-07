@@ -1,4 +1,4 @@
-from figuras import Figura
+from Model.figura import Figura
 
 class Armazem:
     def __init__(self):

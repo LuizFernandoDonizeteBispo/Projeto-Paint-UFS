@@ -1,5 +1,5 @@
 from View.quadro import Quadro
-from View.desenho import Desenho
+from Controller.Desenhar import Desenho
 
 class Mouse:
     def __init__(self, canvas, desenho : Desenho):

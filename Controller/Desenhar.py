@@ -1,5 +1,14 @@
 from View.seletor_cor import SeletorCor
-from Model import *
+from Model.figura import Figura
+from Model.figura_linha import FiguraLinha
+from Model.figura_circulo import FiguraCirculo
+from Model.figura_retangulo import FiguraRetangulo
+from Model.figura_oval import FiguraOval
+from Model.figura_rabisco import FiguraRabisco
+
+
+
+
 
 class Desenho:
 
@@ -40,3 +49,8 @@ class Desenho:
             if self.figura_atual is not None:
                 self.figura_atual.atualizar(event.x, event.y)
                 self.redesenhar()
+    
+    def incluir_figura(self, event):
+        if not self.figura_atual.incompleta():
+            self.figuras.append(self.figura_atual)
+        self._redesenhar()
