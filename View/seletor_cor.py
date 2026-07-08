@@ -1,23 +1,7 @@
-#from tkinter import colorchooser
-
-#color = colorchooser.askcolor
+from tkinter import colorchooser
 
 class SeletorCor:
-
-
-   _CORES = {
-       "Preto": "black",
-       "Vermelho": "red",
-       "Verde": "green",
-       "Azul": "blue",
-       "Amarelo": "yellow",
-       "Cinza": "gray",
-       "Roxo": "purple",
-   }
-   @staticmethod
-   def converter(nome):
-       return SeletorCor._CORES.get(nome, "black")
-
-
-
-
+    @staticmethod
+    def escolher_cor(titulo="Escolha uma cor"):
+        cor = colorchooser.askcolor(title=titulo)
+        return  cor[1] if cor[1] else "black"
