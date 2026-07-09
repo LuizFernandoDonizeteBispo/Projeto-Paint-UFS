@@ -33,10 +33,11 @@ class Desenho:
     def incluir_figura(self, event):
         if not self.figura_atual.incompleta():
             self.figuras.append(self.figura_atual)
+        self.figura_atual = None
         self.redesenhar()
 
     def redesenhar(self):
-        self.limpar()
+        self.janela_paint.limpar()
         for fig in self.figuras:
             self.janela_paint.desenhar(fig)
         if self.figura_atual is not None:
