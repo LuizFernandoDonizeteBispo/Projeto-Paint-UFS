@@ -30,7 +30,7 @@ class Menu:
 
 
     def _escolher_borda(self):
-            self.SeletorCor.escolher_colher_cor("Cor da Borda")
+            self.cor_bord_atual = SeletorCor.escolher_cor("Cor da Borda")
 
     def _escolher_preench(self):
             self.cor_preench_atual = SeletorCor.escolher_cor("Cor do preench.")

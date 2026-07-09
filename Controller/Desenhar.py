@@ -1,5 +1,3 @@
-from View.seletor_cor import SeletorCor
-from Model.figura import Figura
 from Model.figura import Figura
 from View.janelaPaint import JanelaPaint
 from View.menu import Menu
@@ -21,11 +19,11 @@ class Desenho:
         cor_p = self.menu.cor_preench_atual
       
         # Pega o tipo da forma selecionada
-        tipo = self.tipo_figura_var.get()
+        tipo = self.menu.tipo_figura_var.get()
 
         self.figura_atual = Figura.criar(tipo,event.x, event.y, cor_b, cor_p)
 
-        self.menu_redesenhar()
+        self.redesenhar()
 
     def atualizar_figura(self, event):
             if self.figura_atual is not None:
@@ -35,4 +33,11 @@ class Desenho:
     def incluir_figura(self, event):
         if not self.figura_atual.incompleta():
             self.figuras.append(self.figura_atual)
-        self._redesenhar()
+        self.redesenhar()
+
+    def redesenhar(self):
+        self.limpar()
+        for fig in self.figuras:
+            self.janela_paint.desenhar(fig)
+        if self.figura_atual is not None:
+            self.janela_paint.desenhar(self.figura_atual)
