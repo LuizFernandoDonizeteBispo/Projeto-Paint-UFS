@@ -8,7 +8,7 @@ class JanelaPaint():
         self.canvas = canvas
     def limpar(self):
         self.canvas.delete('all')
-    def desenhar(self, figura): #desenha figuras çiteralmente, esta no view porque mexe na parte visual. o controller e responsavel por puxar esse metodo
+    def desenhar(self, figura): #desenha figuras literalmente, esta no view porque mexe na parte visual. o controller e responsavel por puxar esse metodo
         tipo = figura.tipo
         coords = figura.values
         cor_bord = figura.cor_bord

@@ -1,14 +1,15 @@
 from Model.figura import Figura
 from View.janelaPaint import JanelaPaint
 from View.menu import Menu
+from Model.armazem_figuras import Armazem
 class Desenho:
 
-    def __init__(self, canvas, Janela_paint, menu):
+    def __init__(self, canvas, Janela_paint, menu, armazem):
         self.canvas = canvas
         self.figura_atual = None
         self.menu = menu
         self.janela_paint = Janela_paint
-        self.figuras = []
+        self.armazem = armazem
        
 
 
@@ -32,13 +33,13 @@ class Desenho:
     
     def incluir_figura(self, event):
         if not self.figura_atual.incompleta():
-            self.figuras.append(self.figura_atual)
+            self.armazem.incluir_figura(self.figura_atual)
         self.figura_atual = None
         self.redesenhar()
 
     def redesenhar(self):
         self.janela_paint.limpar()
-        for fig in self.figuras:
+        for fig in self.armazem.obter_figuras():
             self.janela_paint.desenhar(fig)
         if self.figura_atual is not None:
             self.janela_paint.desenhar(self.figura_atual)
