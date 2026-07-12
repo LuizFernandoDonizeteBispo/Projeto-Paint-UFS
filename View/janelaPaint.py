@@ -6,6 +6,7 @@ from Model import *
 class JanelaPaint():
     def __init__(self, canvas):
        self.canvas = canvas
+
     def desenhar(self, figura): #desenha figuras çiteralmente, esta no view porque mexe na parte visual. o controller e responsavel por puxar esse metodo
         tipo = figura.tipo
         coords = figura.values
@@ -37,4 +38,10 @@ class JanelaPaint():
              self.canvas.create_line(*pontos, fill="white", width=10, capstyle="round", joinstyle="round")
     
     
+    def limpar(self):
+        self.canvas.delete("all")
 
+    def ativar_mouse(self, pressionado, arrastado, solto):
+        self.canvas.bind("<ButtonPress-1>", pressionado)
+        self.canvas.bind("<B1-Motion>", arrastado)
+        self.canvas.bind("<ButtonRelease-1>", solto)
