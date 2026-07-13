@@ -14,11 +14,10 @@ root = Tk()
 root.state('zoomed')
 menu = Menu(root)
 quadro = Quadro(root)
-armazem = Armazem()
 janela_paint = JanelaPaint(quadro.canvas)
 desenho = Desenho(janela_paint)
 controlador = ControladorPaint(desenho, menu)
-arquivos = Arquivos(armazem, desenho)
+arquivos = Arquivos(desenho)
 menu.montar()
 menu.arquivos = arquivos
 
