@@ -1,10 +1,10 @@
 from Model.armazem_figuras import Armazem
 import pickle
-from .Desenhar import Desenho
+from Model.desenho import Desenho
 
 class Arquivos:
 
-    def __init__(self, armazem, desenho : Desenho):
+    def __init__(self, armazem : Armazem, desenho : Desenho):
         self.armazem = armazem
         self.desenho = desenho
 

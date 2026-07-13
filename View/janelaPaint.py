@@ -21,6 +21,10 @@ class JanelaPaint():
         elif tipo == 'retangulo':
             x1, y1, x2, y2 = coords
             self.canvas.create_rectangle(x1, y1, x2, y2, fill= cor_preench, outline= cor_bord)
+
+        elif tipo == 'quadrado':
+            x1, y1, x2, y2 = coords
+            self.canvas.create_rectangle(x1, y1, x2, y2, fill= cor_preench, outline= cor_bord)
         
         elif tipo == 'rabisco':
             pontos = [valor for ponto in coords for valor in ponto]
@@ -38,5 +42,11 @@ class JanelaPaint():
              pontos = [valor for ponto in coords for valor in ponto]
              self.canvas.create_line(*pontos, fill="white", width=10, capstyle="round", joinstyle="round")
     
-    
+    def limpar(self):
+        self.canvas.delete("all")
+
+    def ativar_mouse(self, pressionado, arrastado, solto):
+        self.canvas.bind("<ButtonPress-1>", pressionado)
+        self.canvas.bind("<B1-Motion>", arrastado)
+        self.canvas.bind("<ButtonRelease-1>", solto)
 

@@ -18,7 +18,7 @@ class Menu:
         paddings = {'padx': 5, 'pady': 5}
 
         option_menu = ttk.OptionMenu(self.frame, self.tipo_figura_var,
-                                      'Linha', 'Linha', 'Rabisco', 'Circulo', 'Oval', 'Retangulo', 'Borracha')
+                                      'Linha', 'Linha', 'Rabisco', 'Circulo', 'Oval', 'Retangulo', 'Quadrado', 'Borracha')
         option_menu.grid(column=1, row=2, sticky=W, **paddings)
 
         option_menu_opcao = ttk.OptionMenu(self.frame, self.opcao_var, 'Arquivos', 'Salvar', 'Abrir', 'Fechar',
@@ -47,7 +47,11 @@ class Menu:
 
     def escolher_opcao(self, opcao):
         if opcao == 'Salvar':
-            caminho = filedialog.asksaveasfilename()
+            caminho = filedialog.asksaveasfilename(
+                title="Salvar arquivo como...",
+                defaultextension=".paint",
+                filetypes=[("Arquivo Paint", "*.paint"), ("Todos os arquivos", "*.*")]
+            )
             if caminho:
                  self.arquivos.salvar(caminho)
         elif opcao == 'Abrir':

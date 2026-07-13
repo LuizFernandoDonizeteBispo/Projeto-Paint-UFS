@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from Model.Desenho import Desenho
+from Model.desenho import Desenho
 from Controller.ferramenta_linha import LinhaFerramenta
 from Controller.ferramenta_circulo import CirculoFerramenta
 from Controller.ferramenta_retangulo import RetanguloFerramenta
+from Controller.ferramenta_quadrado import QuadradoFerramenta
 from Controller.ferramenta_oval import OvalFerramenta
 from Controller.ferramenta_rabisco import RabiscoFerramenta
 from Controller.ferramenta_borracha import BorrachaFerramenta
@@ -18,6 +19,7 @@ class ControladorPaint:
             "Linha": LinhaFerramenta(self.visao, self.desenho),
             "Circulo": CirculoFerramenta(self.visao, self.desenho),
             "Retangulo": RetanguloFerramenta(self.visao, self.desenho),
+            "Quadrado": QuadradoFerramenta(self.visao, self.desenho),
             "Oval": OvalFerramenta(self.visao, self.desenho),
             "Rabisco": RabiscoFerramenta(self.visao, self.desenho),
             "Borracha": BorrachaFerramenta(self.visao, self.desenho),

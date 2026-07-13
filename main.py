@@ -3,9 +3,9 @@ from Model import *
 from View.menu import Menu
 from View.quadro import Quadro
 from View.janelaPaint import JanelaPaint
-from Controller.Desenhar import Desenho
-from Controller.mouse import Mouse
+from Model.desenho import Desenho
 from Controller.arquivos import Arquivos
+from Controller.controlador_paint import ControladorPaint
 
 
 #******* MAIN *******#
@@ -16,10 +16,10 @@ menu = Menu(root)
 quadro = Quadro(root)
 armazem = Armazem()
 janela_paint = JanelaPaint(quadro.canvas)
-desenho = Desenho(quadro.canvas, janela_paint, menu, armazem)
+desenho = Desenho(janela_paint)
+controlador = ControladorPaint(desenho, menu)
 arquivos = Arquivos(armazem, desenho)
 menu.montar()
 menu.arquivos = arquivos
-mouse = Mouse(quadro.canvas, desenho, arquivos)
-mouse.mouse()
+
 root.mainloop()
