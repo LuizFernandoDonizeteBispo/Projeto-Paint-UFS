@@ -6,8 +6,10 @@ from Model import *
 class JanelaPaint():
     def __init__(self, canvas):
         self.canvas = canvas
+    
     def limpar(self):
         self.canvas.delete('all')
+
     def desenhar(self, figura): #desenha figuras literalmente, esta no view porque mexe na parte visual. o controller e responsavel por puxar esse metodo
         tipo = figura.tipo
         coords = figura.values

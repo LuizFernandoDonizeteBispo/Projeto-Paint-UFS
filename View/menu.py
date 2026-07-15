@@ -1,7 +1,6 @@
 from tkinter import Frame, StringVar, X, W
 from tkinter import ttk
 from View.seletor_cor import SeletorCor
-from tkinter import filedialog
 
 
 class Menu:
@@ -12,13 +11,12 @@ class Menu:
         self.cor_bord_atual = "Black"
         self.cor_preench_atual = ""
         self.opcao_var = StringVar(root)
-        self.root = root
 
     def montar(self):
         paddings = {'padx': 5, 'pady': 5}
 
         option_menu = ttk.OptionMenu(self.frame, self.tipo_figura_var,
-                                      'Linha', 'Linha', 'Rabisco', 'Circulo', 'Oval', 'Retangulo', 'Quadrado', 'Borracha')
+                                      'Linha', 'Linha', 'Rabisco', 'Circulo', 'Oval', 'Retangulo','Quadrado', 'Borracha','Selecao')
         option_menu.grid(column=1, row=2, sticky=W, **paddings)
 
         option_menu_opcao = ttk.OptionMenu(self.frame, self.opcao_var, 'Arquivos', 'Salvar', 'Abrir', 'Fechar',
@@ -45,18 +43,10 @@ class Menu:
     def _sem_preench(self):
             self.cor_preench_atual = ""
 
-    def escolher_opcao(self, opcao):
-        if opcao == 'Salvar':
-            caminho = filedialog.asksaveasfilename(
-                title="Salvar arquivo como...",
-                defaultextension=".paint",
-                filetypes=[("Arquivo Paint", "*.paint"), ("Todos os arquivos", "*.*")]
-            )
-            if caminho:
-                 self.arquivos.salvar(caminho)
-        elif opcao == 'Abrir':
-            caminho = filedialog.askopenfilename()
-            if caminho:
-                 self.arquivos.abrir(caminho)
-        elif opcao == 'Fechar':
-             self.root.destroy()
+    def escolher_opcao(self, opcao_var, caminho, arquivos):
+        if opcao_var == 'Salvar':
+            arquivos.salvar(caminho)
+        elif opcao_var == 'Abrir':
+            arquivos.abrir(caminho)
+        elif opcao_var == 'Fechar':
+             sair

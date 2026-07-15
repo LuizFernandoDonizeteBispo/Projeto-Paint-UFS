@@ -8,3 +8,12 @@ class FiguraCirculo(Figura):
 
     def incompleta(self):
         return self.values[2] == 0
+    
+    def contem(self, x, y):
+        cx, cy, raio = self.values
+        distancia = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5
+        return distancia <= raio
+    
+    def mover(self, dx, dy):
+        cx, cy, raio = self.values
+        self.values = (cx + dx, cy + dy, raio)

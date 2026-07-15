@@ -13,12 +13,12 @@ from Controller.controlador_paint import ControladorPaint
 root = Tk()
 root.state('zoomed')
 menu = Menu(root)
+menu.montar()
 quadro = Quadro(root)
 janela_paint = JanelaPaint(quadro.canvas)
 desenho = Desenho(janela_paint)
 controlador = ControladorPaint(desenho, menu)
 arquivos = Arquivos(desenho)
-menu.montar()
 menu.arquivos = arquivos
 
 root.mainloop()

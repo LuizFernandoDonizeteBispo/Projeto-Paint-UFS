@@ -7,7 +7,8 @@ from Controller.ferramenta_quadrado import QuadradoFerramenta
 from Controller.ferramenta_oval import OvalFerramenta
 from Controller.ferramenta_rabisco import RabiscoFerramenta
 from Controller.ferramenta_borracha import BorrachaFerramenta
-
+from Controller.ferramenta_selecao import SelecaoFerramenta
+from Controller.controlador_selecao import ControladorSelecao
 
 @dataclass
 class ControladorPaint:
@@ -23,6 +24,7 @@ class ControladorPaint:
             "Oval": OvalFerramenta(self.visao, self.desenho),
             "Rabisco": RabiscoFerramenta(self.visao, self.desenho),
             "Borracha": BorrachaFerramenta(self.visao, self.desenho),
+            "Selecao": SelecaoFerramenta(self.visao, self.desenho),
         }
         self.ferramenta_atual = self.ferramentas["Linha"]
 
@@ -33,6 +35,8 @@ class ControladorPaint:
             self.mouse_arrastado,
             self.mouse_solto
         )
+
+        self.controlador_selecao = ControladorSelecao(self.desenho, self.visao)
 
     def muda_ferramenta(self, *args):
         tipo = self.visao.tipo_figura_var.get()
